@@ -44,15 +44,16 @@ def get_the_cheapest_big_mac_price_by_year(year):
     return  f"{country_name}({country_cc}): ${price}"
 
 def get_the_most_expensive_big_mac_price_by_year(year):
+    #copy majority of the code from previous def and just change to look for max value instead of mini
     query_dt = f"(date >= '{year}-01-01' and date <= '{year}-12-31')"
     df_result = df.query(query_dt)
     #df_result['dollar_price'] is selecting the column with that name. .loc lcoating the row by and index and idxmax check for the highest vaule from the row and columns
     maxi = df_result.loc[df_result['dollar_price'].idxmax()]
-    #Here the code is getting the information from mini and looks for country name
+    #Here the code is getting the information from maxi and looks for country name
     country_name = maxi['name']
-    #Here the code is getting the information from mini and looks for country code
+    #Here the code is getting the information from maxi and looks for country code
     country_cc = maxi['iso_a3']
-    #Here the code is also getting information from mini and getting the value from dollar price and rounds into 2 decimal place
+    #Here the code is also getting information from maxi and getting the value from dollar price and rounds into 2 decimal place
     price = round(maxi['dollar_price'],2)
     return  f"{country_name}({country_cc}): ${price}"
 
