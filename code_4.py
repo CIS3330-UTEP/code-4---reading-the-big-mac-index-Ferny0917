@@ -30,13 +30,38 @@ def get_big_mac_price_by_country(country_code):
 
 
 def get_the_cheapest_big_mac_price_by_year(year):
-    pass # Remove this line and code your function
+    #copy the line for checking the years
+    query_dt = f"(date >= '{year}-01-01' and date <= '{year}-12-31')"
+    df_result = df.query(query_dt)
+    #df_result['dollar_price'] is selecting the column with that name. .loc lcoating the row by and index and idxmin check for the lowest vaule from the row and columns
+    mini = df_result.loc[df_result['dollar_price'].idxmin()]
+    #Here the code is getting the information from mini and looks for country name
+    country_name = mini['name']
+    #Here the code is getting the information from mini and looks for country code
+    country_cc = mini['iso_a3']
+    #Here the code is also getting information from mini and getting the value from dollar price and rounds into 2 decimal place
+    price = round(mini['dollar_price'],2)
+    return  f"{country_name}({country_cc}): ${price}"
 
 def get_the_most_expensive_big_mac_price_by_year(year):
-    pass # Remove this line and code your function
+    query_dt = f"(date >= '{year}-01-01' and date <= '{year}-12-31')"
+    df_result = df.query(query_dt)
+    #df_result['dollar_price'] is selecting the column with that name. .loc lcoating the row by and index and idxmax check for the highest vaule from the row and columns
+    maxi = df_result.loc[df_result['dollar_price'].idxmax()]
+    #Here the code is getting the information from mini and looks for country name
+    country_name = maxi['name']
+    #Here the code is getting the information from mini and looks for country code
+    country_cc = maxi['iso_a3']
+    #Here the code is also getting information from mini and getting the value from dollar price and rounds into 2 decimal place
+    price = round(maxi['dollar_price'],2)
+    return  f"{country_name}({country_cc}): ${price}"
 
 if __name__ == "__main__":
     result_a = get_big_mac_price_by_year(2012,'jpn')
     print(result_a)
     result_b = get_big_mac_price_by_country('mex')
     print(result_b)
+    result_c = get_the_cheapest_big_mac_price_by_year(2008)
+    print(result_c)
+    result_d = get_the_most_expensive_big_mac_price_by_year(2003)
+    print(result_d)
